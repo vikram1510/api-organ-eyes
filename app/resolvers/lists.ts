@@ -1,5 +1,4 @@
 import { UserInputError } from 'apollo-server-express';
-import { List } from '../generated';
 import { Resolvers } from '../generated';
 import { Context } from '../types';
 
@@ -32,6 +31,17 @@ export const listResolver: Resolvers<Context> = {
     async createList(_parent, args, { db }) {
       const tasks = await db.task.findByIds(args.listCreate.tasks);
       return db.list.save({ ...args.listCreate, tasks });
+    },
+    async deleteList(_parent, { id }, { db }){
+      try {
+        await db.list.delete({ id });
+      } catch (e){
+        console.log(e);
+        throw new UserInputError('Something went wrong');
+      }
+      return {
+        message: 'List deleted'
+      };
     }
   },
   List: {

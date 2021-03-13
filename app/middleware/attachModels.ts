@@ -1,13 +1,5 @@
-import { createConnection } from 'typeorm';
+import { NextFunction, Request } from 'express';
 
-export default function attachModels(){
+export function test(req: Request, res: Response, next: NextFunction){
   console.log('hi');
-
-  return async (req: any, res: any, next: any) => {
-    const models = await createConnection({ type: 'mysql', host: 'db', port: 3306, username: 'root' });
-    console.log(models);
-    req.models = models;
-    next();
-  };
-
 }

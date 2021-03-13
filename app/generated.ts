@@ -34,11 +34,21 @@ export type List = {
   tasks: Array<Task>;
 };
 
+export type TaskUpdate = {
+  name?: Maybe<Scalars['String']>;
+  list?: Maybe<Scalars['Int']>;
+};
+
+export type TaskCreate = {
+  name: Scalars['String'];
+  list?: Maybe<Scalars['Int']>;
+};
+
 export type Task = {
   __typename?: 'Task';
   id: Scalars['Int'];
   name: Scalars['String'];
-  list: List;
+  list?: Maybe<List>;
 };
 
 export type Message = {
@@ -50,12 +60,17 @@ export type Query = {
   __typename?: 'Query';
   getList: List;
   getLists: Array<List>;
-  task: Task;
-  tasks: Array<Task>;
+  getTask: Task;
+  getTasks: Array<Task>;
 };
 
 
 export type QueryGetListArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryGetTaskArgs = {
   id: Scalars['Int'];
 };
 
@@ -64,6 +79,9 @@ export type Mutation = {
   createList: List;
   updateList: List;
   deleteList: Message;
+  createTask: Task;
+  updateTask: Task;
+  deleteTask: Message;
 };
 
 
@@ -79,7 +97,23 @@ export type MutationUpdateListArgs = {
 
 
 export type MutationDeleteListArgs = {
-  id?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+};
+
+
+export type MutationCreateTaskArgs = {
+  taskCreate: TaskCreate;
+};
+
+
+export type MutationUpdateTaskArgs = {
+  id: Scalars['Int'];
+  taskUpdate: TaskUpdate;
+};
+
+
+export type MutationDeleteTaskArgs = {
+  id: Scalars['Int'];
 };
 
 export enum CacheControlScope {
@@ -171,6 +205,8 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   ListCreate: ListCreate;
   List: ResolverTypeWrapper<List>;
+  TaskUpdate: TaskUpdate;
+  TaskCreate: TaskCreate;
   Task: ResolverTypeWrapper<Task>;
   Message: ResolverTypeWrapper<Message>;
   Query: ResolverTypeWrapper<{}>;
@@ -187,6 +223,8 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   ListCreate: ListCreate;
   List: List;
+  TaskUpdate: TaskUpdate;
+  TaskCreate: TaskCreate;
   Task: Task;
   Message: Message;
   Query: {};
@@ -210,7 +248,7 @@ export type ListResolvers<ContextType = any, ParentType extends ResolversParentT
 export type TaskResolvers<ContextType = any, ParentType extends ResolversParentTypes['Task'] = ResolversParentTypes['Task']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  list?: Resolver<ResolversTypes['List'], ParentType, ContextType>;
+  list?: Resolver<Maybe<ResolversTypes['List']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -222,14 +260,17 @@ export type MessageResolvers<ContextType = any, ParentType extends ResolversPare
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getList?: Resolver<ResolversTypes['List'], ParentType, ContextType, RequireFields<QueryGetListArgs, 'id'>>;
   getLists?: Resolver<Array<ResolversTypes['List']>, ParentType, ContextType>;
-  task?: Resolver<ResolversTypes['Task'], ParentType, ContextType>;
-  tasks?: Resolver<Array<ResolversTypes['Task']>, ParentType, ContextType>;
+  getTask?: Resolver<ResolversTypes['Task'], ParentType, ContextType, RequireFields<QueryGetTaskArgs, 'id'>>;
+  getTasks?: Resolver<Array<ResolversTypes['Task']>, ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createList?: Resolver<ResolversTypes['List'], ParentType, ContextType, RequireFields<MutationCreateListArgs, 'listCreate'>>;
   updateList?: Resolver<ResolversTypes['List'], ParentType, ContextType, RequireFields<MutationUpdateListArgs, 'id' | 'listUpdate'>>;
-  deleteList?: Resolver<ResolversTypes['Message'], ParentType, ContextType, RequireFields<MutationDeleteListArgs, never>>;
+  deleteList?: Resolver<ResolversTypes['Message'], ParentType, ContextType, RequireFields<MutationDeleteListArgs, 'id'>>;
+  createTask?: Resolver<ResolversTypes['Task'], ParentType, ContextType, RequireFields<MutationCreateTaskArgs, 'taskCreate'>>;
+  updateTask?: Resolver<ResolversTypes['Task'], ParentType, ContextType, RequireFields<MutationUpdateTaskArgs, 'id' | 'taskUpdate'>>;
+  deleteTask?: Resolver<ResolversTypes['Message'], ParentType, ContextType, RequireFields<MutationDeleteTaskArgs, 'id'>>;
 };
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {

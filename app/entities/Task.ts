@@ -3,10 +3,18 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 't
 import { List, listType } from './List';
 
 export const taskType = gql`
+  input TaskUpdate {
+    name: String,
+    list: Int
+  },
+  input TaskCreate {
+    name: String!,
+    list: Int
+  }
   type Task {
     id: Int!
     name: String!
-    list: List!
+    list: List
   }
 `;
 
