@@ -1,5 +1,5 @@
 import { UserInputError } from 'apollo-server-express';
-import { Resolvers } from '../generated';
+import { Resolvers } from '../types/generated';
 import { Context } from '../types';
 
 export const listResolver: Resolvers<Context> = {

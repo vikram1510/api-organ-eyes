@@ -6,7 +6,6 @@ import { List, listType } from './entities/List';
 import { Task, taskType } from './entities/Task';
 import { ApolloServer, gql, IResolvers } from 'apollo-server-express';
 import { listResolver } from './resolvers/lists';
-import { test } from './middleware/attachModels';
 const port = 4000;
 const app = express();
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "tsc --noEmit",
-    "dev": "nodemon app/index.ts",
+    "dev": "nodemon app/server.ts",
     "generate": "graphql-codegen --config codegen.yml"
   },
   "author": "",
