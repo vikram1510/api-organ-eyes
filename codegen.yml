@@ -7,6 +7,4 @@ generates:
       - "typescript"
       - "typescript-resolvers"
       - "typescript-document-nodes"
-  ./graphql.schema.json:
-    plugins:
-      - "introspection"
+

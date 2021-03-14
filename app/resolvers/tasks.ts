@@ -9,6 +9,7 @@ export const taskResolver: Resolvers<Context> = {
       if (!task) throw new UserInputError('Invalid task Id');
       return task;
     },
+
     getTasks(_parent, _args, { db }){
       return db.task.find();
     }
@@ -27,6 +28,7 @@ export const taskResolver: Resolvers<Context> = {
       }
       return db.task.save(updatedTask);
     },
+
     async createTask(_parent, { taskCreate: { name, list: listId } }, { db }){
       const newTask = db.task.create({ name });
       if (listId) {
@@ -35,6 +37,7 @@ export const taskResolver: Resolvers<Context> = {
       }
       return db.task.save(newTask);
     },
+
     async deleteTask(_parent, { id }, { db }){
       try {
         await db.task.delete({ id });
