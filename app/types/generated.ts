@@ -36,18 +36,19 @@ export type List = {
 
 export type TaskUpdate = {
   name?: Maybe<Scalars['String']>;
-  list?: Maybe<Scalars['Int']>;
+  listId?: Maybe<Scalars['Int']>;
 };
 
 export type TaskCreate = {
   name: Scalars['String'];
-  list?: Maybe<Scalars['Int']>;
+  listId?: Maybe<Scalars['Int']>;
 };
 
 export type Task = {
   __typename?: 'Task';
   id: Scalars['Int'];
   name: Scalars['String'];
+  listId?: Maybe<Scalars['Int']>;
   list?: Maybe<List>;
 };
 
@@ -248,6 +249,7 @@ export type ListResolvers<ContextType = any, ParentType extends ResolversParentT
 export type TaskResolvers<ContextType = any, ParentType extends ResolversParentTypes['Task'] = ResolversParentTypes['Task']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  listId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   list?: Resolver<Maybe<ResolversTypes['List']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

@@ -5,15 +5,16 @@ import { List, listType } from './List';
 export const taskType = gql`
   input TaskUpdate {
     name: String,
-    list: Int
+    listId: Int
   },
   input TaskCreate {
     name: String!,
-    list: Int
+    listId: Int
   }
   type Task {
     id: Int!
     name: String!
+    listId: Int
     list: List
   }
 `;
@@ -26,6 +27,9 @@ export class Task {
 
     @Column()
     name!: string;
+
+    @Column({ nullable: true })
+    listId!: number;
 
     @ManyToOne(() => List, list => list.tasks)
     list!: List;

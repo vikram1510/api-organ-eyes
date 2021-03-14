@@ -5,36 +5,36 @@ import { Context } from '../types';
 export const listResolver: Resolvers<Context> = {
   Query: {
     async getList(_parent, args, context){
-      const list = await context.db.list.findOne({ relations: ['tasks'], where: { id: args.id } });
+      const list = await context.db.lists.findOne({ relations: ['tasks'], where: { id: args.id } });
       if (!list) throw new UserInputError('Invalid List Id');
       return list;
     },
     getLists(_parent, _args, context){
-      return context.db.list.find();
+      return context.db.lists.find();
     }
   },
   Mutation: {
     async updateList(_parent, { id, listUpdate: { tasks: taskIds, name } }, { db }) {
       if (!taskIds && !name) throw new UserInputError('Please specify atleast one input argument');
-      const list = await db.list.findOne({ where: { id } });
+      const list = await db.lists.findOne({ where: { id } });
       if (!list) throw new UserInputError('Invalid list Id');
-      let updatedList = db.list.create(list);
+      let updatedList = db.lists.create(list);
       if (taskIds){
-        const tasks = await db.task.findByIds(taskIds);
+        const tasks = await db.tasks.findByIds(taskIds);
         updatedList = { ...updatedList, tasks };
       }
       if (name){
         updatedList = { ...updatedList, name };
       }
-      return db.list.save(updatedList);
+      return db.lists.save(updatedList);
     },
     async createList(_parent, args, { db }) {
-      const tasks = await db.task.findByIds(args.listCreate.tasks);
-      return db.list.save({ ...args.listCreate, tasks });
+      const tasks = await db.tasks.findByIds(args.listCreate.tasks);
+      return db.lists.save({ ...args.listCreate, tasks });
     },
     async deleteList(_parent, { id }, { db }){
       try {
-        await db.list.delete({ id });
+        await db.lists.delete({ id });
       } catch (e){
         console.log(e);
         throw new UserInputError('Something went wrong');
@@ -47,7 +47,7 @@ export const listResolver: Resolvers<Context> = {
   List: {
     // beauty
     async tasks(list, _args, { db }){
-      return db.task.find({ where: { list: list.id } });
+      return db.tasks.find({ where: { listId: list.id } });
     }
   }
 };

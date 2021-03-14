@@ -4,7 +4,7 @@ import { Task } from '../entities/Task';
 
 export type Context = {
   db: {
-    list: Repository<List>,
-    task: Repository<Task>
+    lists: Repository<List>,
+    tasks: Repository<Task>
   }
 }

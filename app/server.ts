@@ -6,6 +6,7 @@ import { List, listType } from './entities/List';
 import { Task, taskType } from './entities/Task';
 import { ApolloServer, gql, IResolvers } from 'apollo-server-express';
 import { listResolver } from './resolvers/lists';
+import { taskResolver } from './resolvers/tasks';
 const port = 4000;
 const app = express();
 
@@ -40,8 +41,8 @@ createConnection().then(connection => {
     }
   `;
 
-  const resolvers = [listResolver] as IResolvers[];
-  const server = new ApolloServer({ typeDefs, resolvers, context: { db: { list: listModel, task: taskModel } } });
+  const resolvers = [listResolver, taskResolver] as IResolvers[];
+  const server = new ApolloServer({ typeDefs, resolvers, context: { db: { lists: listModel, tasks: taskModel } } });
   
   server.applyMiddleware({ app, cors: false, bodyParserConfig: false });
 
