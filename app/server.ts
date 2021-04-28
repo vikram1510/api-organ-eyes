@@ -21,7 +21,8 @@ createConnection().then(connection => {
   const typeDefs = gql`
     ${listType}
     ${taskType}
-    type Message {
+    type DeleteResponse {
+      deletedId: Int!
       message: String!
     }
     type Query {
@@ -34,10 +35,10 @@ createConnection().then(connection => {
     type Mutation {
       createList(listCreate: ListCreate!): List!
       updateList(id: Int!, listUpdate: ListUpdate!): List!
-      deleteList(id: Int!): Message!
+      deleteList(id: Int!): DeleteResponse!
       createTask(taskCreate: TaskCreate!): Task!
       updateTask(id: Int!, taskUpdate: TaskUpdate!): Task!
-      deleteTask(id: Int!): Message!
+      deleteTask(id: Int!): DeleteResponse!
     }
   `;
 

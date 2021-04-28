@@ -40,6 +40,7 @@ export const listResolver: Resolvers<Context> = {
         throw new UserInputError('Something went wrong');
       }
       return {
+        deletedId: id,
         message: 'List deleted'
       };
     }

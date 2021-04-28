@@ -52,8 +52,9 @@ export type Task = {
   list?: Maybe<List>;
 };
 
-export type Message = {
-  __typename?: 'Message';
+export type DeleteResponse = {
+  __typename?: 'DeleteResponse';
+  deletedId: Scalars['Int'];
   message: Scalars['String'];
 };
 
@@ -79,10 +80,10 @@ export type Mutation = {
   __typename?: 'Mutation';
   createList: List;
   updateList: List;
-  deleteList: Message;
+  deleteList: DeleteResponse;
   createTask: Task;
   updateTask: Task;
-  deleteTask: Message;
+  deleteTask: DeleteResponse;
 };
 
 
@@ -209,7 +210,7 @@ export type ResolversTypes = {
   TaskUpdate: TaskUpdate;
   TaskCreate: TaskCreate;
   Task: ResolverTypeWrapper<Task>;
-  Message: ResolverTypeWrapper<Message>;
+  DeleteResponse: ResolverTypeWrapper<DeleteResponse>;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
   CacheControlScope: CacheControlScope;
@@ -227,7 +228,7 @@ export type ResolversParentTypes = {
   TaskUpdate: TaskUpdate;
   TaskCreate: TaskCreate;
   Task: Task;
-  Message: Message;
+  DeleteResponse: DeleteResponse;
   Query: {};
   Mutation: {};
   Upload: Scalars['Upload'];
@@ -254,7 +255,8 @@ export type TaskResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MessageResolvers<ContextType = any, ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message']> = {
+export type DeleteResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteResponse'] = ResolversParentTypes['DeleteResponse']> = {
+  deletedId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -269,10 +271,10 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createList?: Resolver<ResolversTypes['List'], ParentType, ContextType, RequireFields<MutationCreateListArgs, 'listCreate'>>;
   updateList?: Resolver<ResolversTypes['List'], ParentType, ContextType, RequireFields<MutationUpdateListArgs, 'id' | 'listUpdate'>>;
-  deleteList?: Resolver<ResolversTypes['Message'], ParentType, ContextType, RequireFields<MutationDeleteListArgs, 'id'>>;
+  deleteList?: Resolver<ResolversTypes['DeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteListArgs, 'id'>>;
   createTask?: Resolver<ResolversTypes['Task'], ParentType, ContextType, RequireFields<MutationCreateTaskArgs, 'taskCreate'>>;
   updateTask?: Resolver<ResolversTypes['Task'], ParentType, ContextType, RequireFields<MutationUpdateTaskArgs, 'id' | 'taskUpdate'>>;
-  deleteTask?: Resolver<ResolversTypes['Message'], ParentType, ContextType, RequireFields<MutationDeleteTaskArgs, 'id'>>;
+  deleteTask?: Resolver<ResolversTypes['DeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteTaskArgs, 'id'>>;
 };
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
@@ -282,7 +284,7 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 export type Resolvers<ContextType = any> = {
   List?: ListResolvers<ContextType>;
   Task?: TaskResolvers<ContextType>;
-  Message?: MessageResolvers<ContextType>;
+  DeleteResponse?: DeleteResponseResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Upload?: GraphQLScalarType;

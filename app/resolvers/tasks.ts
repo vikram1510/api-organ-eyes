@@ -50,6 +50,7 @@ export const taskResolver: Resolvers<Context> = {
         throw new UserInputError('Something went wrong');
       }
       return {
+        deletedId: id,
         message: 'Task deleted'
       };
     }
